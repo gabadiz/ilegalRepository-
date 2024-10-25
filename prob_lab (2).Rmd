@@ -111,7 +111,7 @@ mean(repetimos)
 ```
 
 **Tu respuesta final, aquí**
-
+89 días aproximadamente.
 
 # Tiempo hasta el fallo del sistema
 En un sistema de computación basado en la nube, tres máquinas virtuales (VMs) están realizando cálculos en paralelo para una aplicación crítica. Cada VM tiene una probabilidad de 
@@ -135,21 +135,43 @@ Para ello, sigue estos pasos:
 a. Escribe el código necesario para simular la variable $T_{\text{fallo}}$. Almacena el resultado de las simulaciones en la variable `shutdown_sims` (pista: echa un vistazo a `pmin` y `pmax`).
 
 ```{r failure_i}
-shutdown_sims = NULL # ???
-# ...
+source('utils.R')
+# shutdown_sims = NULL 
+N = 10000
+distr_prim_ordenador = rexp(N, 1)
+distr_seg_orednador = rexp(N, 1)
+distr_ter_ordenador = rexp(N, 1)
+
+
+shutdown_sims = pmax(distr_prim_ordenador, distr_seg_orednador, distr_ter_ordenador)
+# t_min = pmin(primera_sim)
+
+
+
 ```
 
 b. Estima la distribución a partir de las simulaciones usando un **histograma** 
    (función `hist`; consulta la ayuda para dibujar una densidad de probabilidad 
    en lugar del número de ocurrencias) y...
+   
 
 c. ... compara el histograma obtenido con la distribución teórica. Para ello, implementa en primer lugar `f_theo` y luego dibuja en un mismo gráfico la 
    distribución obtenida por simulaciones y la dada por `f_theo`
    (usando `lines`).
  
 ```{r failure_ii_and_iii}
-f_theo = NULL # ???
-# ...
+# B)
+hist(shutdown_sims , freq = FALSE)
+
+# C)
+t = seq(0 , 12 , 0.1)
+f_theo = function(t) {
+  ifelse(t >= 0, 3 * (1 - exp(-t))^2 * exp(-t), 0)
+}
+f_theo <- Vectorize(f_theo)
+lines(t, y = f_theo(t) , col = "blue", lw = 2)
+
+
 ```
 
 
@@ -161,7 +183,14 @@ a. Escribe una función con prototipo `simulate_empty(n_servers, n_datablocks)` 
 simulación de E (el número de servidores vacíos). Consejo: la función `table` puede ser útil.
 
 ```{r db_i}
-# ?????????
+# Creamos función:
+# Procedemos con la distribución geométrica:
+
+sims = replicate{N = 1000 , {
+  servidores_llenos = sample(c("A" , "B" , "C" , "D" , "E") , 3 ,replace = TRUE)}
+}
+
+
 ```
 
 b. Generalmente, usamos simulaciones para calcular la probabilidad de un evento
