@@ -179,17 +179,23 @@ lines(t, y = f_theo(t) , col = "blue", lw = 2)
 
 En un sistema de base de datos distribuida, los datos se asignan aleatoriamente a diferentes servidores para su almacenamiento. Hay `n_servers` servidores y `n_datablock` bloques de datos. Cada bloque de datos se asigna independientemente a uno de los `n_servers` servidores, pero algunos servidores podrían no recibir ningún bloque de datos. Nos interesa determinar la distribución de la variable aleatoria $E$: "el número de servidores que no almacenan ningún bloque de datos ($E$=*Empty*=Vacíos)." Procede de la siguiente manera:
 
-a. Escribe una función con prototipo `simulate_empty(n_servers, n_datablocks)` que devuelva una única 
-simulación de E (el número de servidores vacíos). Consejo: la función `table` puede ser útil.
+a. Escribe una función con prototipo `simulate_empty(n_servers, n_datablocks)` que devuelva una única simulación de E (el número de servidores vacíos). Consejo: la función `table` puede ser útil.
 
 ```{r db_i}
 # Creamos función:
 # Procedemos con la distribución geométrica:
 
-sims = replicate{N = 1000 , {
-  servidores_llenos = sample(c("A" , "B" , "C" , "D" , "E") , 3 ,replace = TRUE)}
-}
+#sims = replicate{N = 1000 , {
+#  servidores_llenos = sample(c("A" , "B" , "C" , "D" , "E") , 3 ,replace = TRUE)}
+#}
 
+n_servers = 0:10000
+n_datablocks = 1000
+
+simulate_empty = function(n_servers, n_datablocks) {
+  paquetes = sample(n_servers, n_datablocks, replace = TRUE)
+  sum(paquetes == 0)
+}
 
 ```
 
@@ -204,7 +210,7 @@ falta hacer nada, solo entender):
 
 ```{r db_ii}
 # Uncomment the following after completing the previous task
-# simulate_empty(n_servers = 10, n_datablocks = 7) == 0:10
+ simulate_empty(n_servers = 10, n_datablocks = 7) == 0:10
 ```
 
 c. Usando la observación anterior, escribe una función con prototipo 
@@ -212,7 +218,22 @@ c. Usando la observación anterior, escribe una función con prototipo
 función de probabilidad completa para la variable aleatoria $E$.
 
 ```{r db_iii}
-# ???
+# P(E = x) lo sacamos de dividir trues / total"(trues + falses)"
+# P(E <= X)
+
+n_sims = 100000
+n_servers = 0:n_sims
+
+n_datablocks = 10000
+
+distribution_empty = function(n_servers, n_datablocks, n_sims){
+  prob = replicate(n_sims , simulate_empty(n_servers , n_datablocks))
+  trues = sum(prob)
+  probabilidad = (trues / n_sims)
+  return(probabilidad)
+}
+print(distribution_empty(n_servers, n_datablocks, n_sims))
+
 ```
 
 d. Usa esta función para dibujar la función de probabilidad de la variable 
