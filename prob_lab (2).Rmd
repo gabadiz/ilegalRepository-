@@ -226,13 +226,13 @@ función de probabilidad completa para la variable aleatoria $E$.
 # P(E = x) lo sacamos de dividir trues / total"(trues + falses)"
 # P(E <= X)
 
-n_sims = 100
+n_sims = 1000
 n_servers = 10
-n_datablocks = 100
+n_datablocks = 4
 
 distribution_empty = function(n_servers, n_datablocks, n_sims){
-  prob = replicate(n_sims , simulate_empty(n_servers , n_datablocks))
-  probabilidad = (table(prob) / n_sims) # Servidores vacios entre el total de simulaciones
+  prob = sum(replicate(n_sims , simulate_empty(n_servers , n_datablocks)))
+  probabilidad = ((prob) / n_sims) # Servidores vacios entre el total de simulaciones
   return(probabilidad)
 }
 print(distribution_empty(n_servers, n_datablocks, n_sims))
@@ -246,11 +246,11 @@ aleatoria "nº de servidores vacíos si se distribuyen 13 bloques de datos en
 n_servers = 5
 n_datablocks = 13
 n_sims = 1000
-print(distribution_empty(n_servers, n_datablocks, n_sims))
+
 dist_prob = distribution_empty(n_servers, n_datablocks, n_sims)
 
 # Graficamos la función de probabilidad de E
-plot(as.numeric(names(dist_prob)), dist_prob, type = "h",
+plot(as.numeric(names(dist_prob)), as.numeric(dist_prob), type = "h",
      xlab = "Número de servidores vacíos (E)", ylab = "Probabilidad",
      main = "Distribución de la probabilidad de E")
 ```
