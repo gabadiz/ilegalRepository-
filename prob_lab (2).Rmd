@@ -231,15 +231,16 @@ n_servers = 10
 n_datablocks = 4
 
 distribution_empty = function(n_servers, n_datablocks, n_sims){
-  prob = sum(replicate(n_sims , simulate_empty(n_servers , n_datablocks)))
-  probabilidad = ((prob) / (n_sims * n_servers)) # Servidores vacios entre el total de simulaciones
+  prob = (replicate(n_sims , simulate_empty(n_servers , n_datablocks)))
+  probabilidad = table(prob) / n_sims # Servidores vacios entre el total de simulaciones
   return(probabilidad)
 }
-distribution_empty2 = function(n_servers, n_datablocks, n_sims){
-  prob = sum(replicate(n_sims , simulate_empty(n_servers , n_datablocks)))
+
+#distribution_empty2 = function(n_servers, n_datablocks, n_sims){
+#  prob = sum(replicate(n_sims , simulate_empty(n_servers , n_datablocks)))
   #probabilidad = ((prob) / (n_sims * n_servers)) # Servidores vacios entre el total de simulaciones
-  return(prob)
-}
+#  return(prob)
+#}
 print(distribution_empty(n_servers, n_datablocks, n_sims))
 ```
 
@@ -250,51 +251,20 @@ aleatoria "nº de servidores vacíos si se distribuyen 13 bloques de datos en
 ```{r db_plot}
 n_servers = 5
 n_datablocks = 13
-n_sims = 100
+n_sims = 1000
 
-dist_prob = distribution_empty(n_servers, n_datablocks, n_sims)
-print(dist_prob)
-
+y = distribution_empty(n_servers, n_datablocks, n_sims)
+craid = (length(y) - 1)
+x = 0:craid
+y 
 # Graficamos la función de probabilidad de E
-plot(0:n_servers, 0:distribution_empty(n_servers, n_datablocks, n_sims), type = "h",
+plot(x , y, type = "h",
      xlab = "Número de servidores vacíos (E)", 
      ylab = "Probabilidad",
-     main = "Distribución de la probabilidad de E")
-
-
-
-# ///////////////////////////////////////////////////////
-
-# Función que simula una única instancia de servidores vacíos
-simulate_empty <- function(n_servers, n_datablocks) {
-  paquetes <- sample(1:n_servers, n_datablocks, replace = TRUE)
-  conteo <- table(factor(paquetes, levels = 1:n_servers))
-  servidores_vacios <- sum(conteo == 0)
-  return(servidores_vacios)
-}
-
-# Función que calcula la distribución de probabilidad completa para E
-distribution_empty <- function(n_servers, n_datablocks, n_sims) {
-  resultados <- replicate(n_sims, simulate_empty(n_servers, n_datablocks))
-  tabla_resultados <- table(resultados) / n_sims  # Proporción de cada valor de E
-  return(tabla_resultados)
-}
-
-# Parámetros de la simulación
-n_servers <- 5
-n_datablocks <- 13
-n_sims <- 1000
-
-# Calculamos la distribución de probabilidad para E
-dist_prob <- distribution_empty(n_servers, n_datablocks, n_sims)
-print(dist_prob)
-
-# Graficamos la función de probabilidad de E
-plot(as.numeric(names(dist_prob)), dist_prob, type = "h", 
-     xlab = "Número de servidores vacíos (E)", 
-     ylab = "Probabilidad", 
      main = "Distribución de la probabilidad de E",
      col = "blue", lwd = 2)
+
+# //////////////////////////////////////////////////////
 
 ```
 
