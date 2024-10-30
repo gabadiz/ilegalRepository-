@@ -1,17 +1,17 @@
 ---
-title: 'Lab 1: probabilidad y variables aleatorias'
-author: 
-Giulio Francesco Tizzano (giuliofrancesco.tizzano@usp.ceu.es) , 
-María Sánchez Nieto (maria.sancheznieto@usp.ceu.es), 
-Gabriel Diaz Arevalillo (gabriel.diazarevalillo@usp.ceu.es), 
-Federico Javier Pordomingo Gallegos (federicojavier.pordomingogalle@usp.ceu.es), 
-Alejandro Rodríguez Ferrer (alejandro.rodriguezferrer@usp.ceu.es). 
-
-    (email1@usp.ceu.es), Nombre2 Apellido2 (email2@usp.ceu.es), etc
+title: "Lab 1: probabilidad y variables aleatorias"
+author: |
+  Giulio Francesco Tizzano (giuliofrancesco.tizzano@usp.ceu.es),
+  María Sánchez Nieto (maria.sancheznieto@usp.ceu.es),
+  Gabriel Diaz Arevalillo (gabriel.diazarevalillo@usp.ceu.es),
+  Federico Javier Pordomingo Gallegos (federicojavier.pordomingogalle@usp.ceu.es),
+  Alejandro Rodríguez Ferrer (alejandro.rodriguezferrer@usp.ceu.es),
+  Otro Nombre (email1@usp.ceu.es), Nombre2 Apellido2 (email2@usp.ceu.es)
 output:
   html_document: default
   pdf_document: default
 ---
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
