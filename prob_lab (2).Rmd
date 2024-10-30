@@ -356,16 +356,11 @@ print(p_h_given_e(7, 28, 50, n_sims = 10000))
 d. Supón que el consumo total de energía para el día es $28 < E < 30$ kWh. Utilizando la función anterior, grafica $P(H=h|28 < E < 30)$ y determina el número más probable de dispositivos de alta energía $H$ (la moda). Usa `Vectorize` para manejar entradas vectorizadas, y asegúrate de tener un número suficiente de simulaciones para obtener resultados precisos.
 
 ```{r smarthome_iv}
-# Vectorizamos la función para que acepte múltiples valores de h
-p_h_given_e_vect <- Vectorize(p_h_given_e, vectorize.args = "h")
+p_h_given_e_vect = Vectorize(p_h_given_e, vectorize.args = "h")
 
-# Rango de valores posibles de H
-h_values <- 0:20  # Suponemos que el máximo posible de H es 20 para este ejemplo
+h_values = 0:20
 
-# Calculamos la probabilidad P(H=h | 28 < E < 30) para cada valor de h en h_values
-probabilities <- p_h_given_e_vect(h = h_values, low_e = 28, high_e = 30, n_sims = 10000)
-
-# Graficamos los resultados
+probabilities = p_h_given_e_vect(h = h_values, low_e = 28, high_e = 30, n_sims = 10000)
 plot(h_values, probabilities, type = "l", pch = 16, col = "blue",
      xlab = "Número de dispositivos de alta energía (H)",
      ylab = "Probabilidad condicional P(H=h | 28 < E < 30)",
